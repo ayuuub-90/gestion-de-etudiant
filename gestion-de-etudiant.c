@@ -191,11 +191,20 @@ void modifierEtudiant(){
         }
         int modification_choix;
         do{
+            printf(COLOR_VIOLET "--------------------------------------------------------------\n" COLOR_RESET);
+                printf(COLOR_VIOLET "etudiant avec l'identifiant %d \n" COLOR_RESET, etudiants[position].uid);
+                printf("    nom: %s\n", etudiants[position].nom);
+                printf("    prenom: %s\n", etudiants[position].prenom);
+                printf("    date de naissance: %d/%d/%d \n", etudiants[position].date_naiss.jour, etudiants[position].date_naiss.mois, etudiants[position].date_naiss.annee);
+                printf("    departement: %s \n", etudiants[position].departement);
+                printf("    note general: %.2f \n", etudiants[position].noteGeneral);
+                printf(COLOR_VIOLET "--------------------------------------------------------------\n" COLOR_RESET);
             printf("--------------------------------------------------------------\n");
             printf("1- modifier le nom et prenom\n");
             printf("2- modifier le departement\n");
             printf("3- modifier la note generale\n");
             printf("4- modifier la date de naissance\n");
+            printf("5- retour au menu principale\n");
             printf("--------------------------------------------------------------\n");
             printf("entrer votre choix: "); scanf("%d", &modification_choix);
 
@@ -204,12 +213,13 @@ void modifierEtudiant(){
                 case 2: modifierDepartement(position); return; break;
                 case 3: modifierNote(position); return; break;
                 case 4: modifierDateNaiss(position); return; break;
+                case 5: return; break;
                 default:
                     printf(COLOR_RED "choisit un choix valid\n" COLOR_RESET);
                     break;
             }
         }
-        while(modification_choix < 1 || modification_choix > 4);
+        while(modification_choix != 5);
     }
 }
 void supprimerEtudiant(){
@@ -436,10 +446,17 @@ void modifierNomEtPrenom(int position){
 }
 void modifierDepartement(int position){
     choisitDepartement(position);
+    
+    printf(COLOR_GREEN "votre informations a ete change\n" COLOR_RESET);
 }
 void modifierNote(int position){
     printf("entrer votre nouvelle note: ");
     scanf("%f", &etudiants[position].noteGeneral);
+
+    while(etudiants[position].noteGeneral < 1 || etudiants[position].noteGeneral > 20){
+        printf(COLOR_RED "votre note doit etre entre 1 et 20..\n" COLOR_RESET);
+        printf("entre votre note: "); scanf("%f", &etudiants[position].noteGeneral);
+    }
 
     printf(COLOR_GREEN "votre informations a ete change\n" COLOR_RESET);
 }
@@ -478,13 +495,23 @@ void rechercherParDepartement(){
 
     char departement[35];
     int counter = 0;
+    int nbre_departements = nbreDepartements();
+
+    printf("--------------------------------------------------------------\n");
+    for(int i=0; i<nbre_departements; i++){
+        printf("%d- %s\n", i+1, departements[i]);
+    }
+    printf("--------------------------------------------------------------\n");
+    
     printf("entrer le nom de departement: "); scanf(" %[^\n]s", departement);
     for(int i=0; i<taille; i++){
         if(strcmp(departement, etudiants[i].departement) == 0){
-            tmp_etudiants[i] = etudiants[i];
+            tmp_etudiants[counter] = etudiants[i];
             counter++;
         }
     }
+    printf(COLOR_YELLOW "--------------------------------------------------------------\n");
+    printf("les etudiants ayant dans le departement %s sont: \n" COLOR_RESET, departement);
     afficherInfosEtudiants(tmp_etudiants, counter);
 }
 
@@ -503,6 +530,7 @@ void afficherListEtudiants(){
 }
 
 void etudiantInscris(){
+    system("cls");
     printf(COLOR_VIOLET "Le nombre total des etudiants inscrits: " COLOR_RESET);
     printf("%d etudiants\n", taille);
 }
@@ -520,7 +548,7 @@ void etudiantDansChaqueDepartement(){
     }
 }
 void etudiantParNoteGeneral(){
-    system("clear");
+    system("cls");
     float seuil;
     int counter = 0;
     printf("entrer la seuille: "); scanf("%f", &seuil);
@@ -534,6 +562,7 @@ void etudiantParNoteGeneral(){
     afficherInfosEtudiants(tmp_etudiants, counter);
 }
 void troisPremiersEtudiant(){
+    system("cls");
     triEtudiantParNoteAsc();
     for(int i=0; i<3; i++){
         tmp_etudiants[i] = etudiants[i];
