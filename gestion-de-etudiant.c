@@ -530,11 +530,12 @@ void afficherListEtudiants(){
 }
 
 void etudiantInscris(){
-    system("cls");
+    system("clear");
     printf(COLOR_VIOLET "Le nombre total des etudiants inscrits: " COLOR_RESET);
     printf("%d etudiants\n", taille);
 }
 void etudiantDansChaqueDepartement(){
+    system("clear");
     int nbre_departements = nbreDepartements();
     printf(COLOR_VIOLET "Le nombre des etudiants dans chaque departement\n" COLOR_RESET);
     for(int i=0; i<nbre_departements; i++){
@@ -544,11 +545,12 @@ void etudiantDansChaqueDepartement(){
                 counter++;
             }
         }
-        printf("    departement %s: %d etudiant(s) \n", departements[i], counter);
+        printf(COLOR_VIOLET "    departement %s: " COLOR_RESET, departements[i]);
+        printf("%d etudiant(s) \n", counter);
     }
 }
 void etudiantParNoteGeneral(){
-    system("cls");
+    system("clear");
     float seuil;
     int counter = 0;
     printf("entrer la seuille: "); scanf("%f", &seuil);
@@ -562,8 +564,8 @@ void etudiantParNoteGeneral(){
     afficherInfosEtudiants(tmp_etudiants, counter);
 }
 void troisPremiersEtudiant(){
-    system("cls");
-    triEtudiantParNoteAsc();
+    system("clear");
+    triEtudiantParNoteDesc();
     for(int i=0; i<3; i++){
         tmp_etudiants[i] = etudiants[i];
     }
@@ -575,6 +577,7 @@ void troisPremiersEtudiant(){
     afficherInfosEtudiants(tmp_etudiants, 3);
 }
 void etudiantReussits(){
+    system("clear");
     printf(COLOR_VIOLET "le nombre d'etudiants ayant reussi dans chaque departement\n" COLOR_RESET);
     int nbre_departements = nbreDepartements();
     for(int i=0; i<nbre_departements; i++){
